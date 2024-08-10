@@ -1,3 +1,5 @@
+const API_URL = import.meta.env.VITE_API_URL;
+
 export type Setting = {
   id: number;
   created_at?: string;
@@ -9,7 +11,7 @@ export type Setting = {
 
 export async function getSettings(): Promise<Setting[]> {
   try {
-    const response = await fetch('http://localhost:5000/settings');
+    const response = await fetch(`${API_URL}/settings`);
 
     if (!response.ok) {
       throw new Error('Error occurred while fetching settings.');
@@ -24,7 +26,7 @@ export async function getSettings(): Promise<Setting[]> {
 
 export async function updateSetting(newSetting: Setting) {
   try {
-    const response = await fetch('http://localhost:5000/settings', {
+    const response = await fetch(`${API_URL}/settings`, {
       method: 'PUT',
       body: JSON.stringify(newSetting),
       headers: {

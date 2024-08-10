@@ -1,3 +1,5 @@
+const API_URL = import.meta.env.VITE_API_URL;
+
 type LoginProps = {
   email: string;
   password: string;
@@ -26,7 +28,7 @@ type UpdateCurrentUserProps = {
 };
 
 function getToken(): string | null {
-  return localStorage.getItem('jwtToken'); // Adjust as needed based on your token storage
+  return localStorage.getItem('jwtToken');
 }
 
 function getUserId(): string | null {
@@ -46,7 +48,7 @@ function getUserId(): string | null {
 
 export async function login({ email, password }: LoginProps): Promise<void> {
   try {
-    const response = await fetch(`http://localhost:5000/account/login`, {
+    const response = await fetch(`${API_URL}/account/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -70,7 +72,7 @@ export async function login({ email, password }: LoginProps): Promise<void> {
 
 export async function signup({ fullName, email, password }: SignupProps): Promise<SignupResponse> {
   try {
-    const response = await fetch(`http://localhost:5000/account/register`, {
+    const response = await fetch(`${API_URL}/account/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -97,7 +99,7 @@ export async function userInfo(): Promise<UserInfo> {
     if (!token) {
       throw new Error('No JWT found.');
     }
-    const response = await fetch(`http://localhost:5000/account/info`, {
+    const response = await fetch(`${API_URL}/account/info`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -127,7 +129,7 @@ export async function updateCurrentUser({
     if (!userId) {
       throw new Error('No User found.');
     }
-    const response = await fetch(`http://localhost:5000/account/update/${userId}`, {
+    const response = await fetch(`${API_URL}/account/update/${userId}`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${token}`,

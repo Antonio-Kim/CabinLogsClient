@@ -2,6 +2,8 @@ import { PAGE_SIZE } from '../utils/constants';
 import { Cabins } from './apiCabins';
 import { Guest } from './apiGuests';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export type Booking = {
   id: number;
   created_at: string;
@@ -46,7 +48,7 @@ type UpdateStatus = {
 
 export async function updateBooking(id: string, obj: UpdateStatus): Promise<Booking> {
   try {
-    const response = await fetch(`http://localhost:5000/bookings/${id}`, {
+    const response = await fetch(`${API_URL}/bookings/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -66,7 +68,7 @@ export async function updateBooking(id: string, obj: UpdateStatus): Promise<Book
 
 export async function deleteBooking(id: string): Promise<void> {
   try {
-    const response = await fetch(`http://localhost:5000/bookings/${id}`, {
+    const response = await fetch(`${API_URL}/bookings/${id}`, {
       method: 'DELETE',
     });
     if (!response.ok) {
@@ -79,7 +81,7 @@ export async function deleteBooking(id: string): Promise<void> {
 
 export async function getBooking(id: number): Promise<Booking | void> {
   try {
-    const response = await fetch(`http://localhost:5000/bookings/${id}`);
+    const response = await fetch(`${API_URL}/${id}`);
     if (!response.ok) {
       throw new Error('Error occurred while fetching booking.');
     }
@@ -97,7 +99,7 @@ export async function getBookings({
   page,
 }: GetBookingsProp): Promise<GetBookingsResponse> {
   try {
-    let url = 'http://localhost:5000/bookings';
+    let url = `${API_URL}/bookings`;
     const query = new URLSearchParams();
 
     if (filter) {
@@ -136,7 +138,7 @@ export async function getBookings({
 
 export async function getBookingsAfterDate(date: number): Promise<GetBookingsResponse> {
   try {
-    let url = 'http://localhost:5000/bookings';
+    let url = `${API_URL}/bookings`;
     const query = new URLSearchParams();
 
     if (date) {
@@ -168,7 +170,7 @@ export async function getBookingsAfterDate(date: number): Promise<GetBookingsRes
 
 export async function getStaysAfterDate(date: number): Promise<GetBookingsResponse> {
   try {
-    let url = 'http://localhost:5000/bookings';
+    let url = `${API_URL}/bookings`;
     const query = new URLSearchParams();
 
     if (date) {
@@ -199,14 +201,9 @@ export async function getStaysAfterDate(date: number): Promise<GetBookingsRespon
 }
 
 export async function getStaysTodayActivity(): Promise<GetBookingsResponse> {
-  // 1. Retrieve the values that are confirmed
-  // 2. Fiter out the data to today
-  // 3. Retrieve the value that are chcked-in
-  // 4. Filter ou the values that are today
-  // 5. Merge the daata together
   try {
-    const unconfirmedURL = `http://localhost:5000/bookings?status=unconfirmed&start=7`;
-    const checkedinURL = `http://localhost:5000/bookings?status=checked-in&start=7`;
+    const unconfirmedURL = `${API_URL}/bookings?status=unconfirmed&start=7`;
+    const checkedinURL = `${API_URL}/bookings?status=checked-in&start=7`;
     // const today = new Date().toISOString().split('T')[0];
     const today = '2024-08-04';
 

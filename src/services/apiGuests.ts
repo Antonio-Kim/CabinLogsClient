@@ -1,3 +1,5 @@
+const API_URL = import.meta.env.VITE_API_URL;
+
 export type Guest = {
   id: number;
   created_at: string;
@@ -10,7 +12,7 @@ export type Guest = {
 
 export async function getGuests(): Promise<Guest[]> {
   try {
-    const response = await fetch(`http://localhost:5000/guests`);
+    const response = await fetch(`${API_URL}/guests`);
     if (!response.ok) {
       throw new Error('Error occurred while fetching guests.');
     }
@@ -24,7 +26,7 @@ export async function getGuests(): Promise<Guest[]> {
 
 export async function getGuest(id: number): Promise<Guest | void> {
   try {
-    const response = await fetch(`http://localhost:5000/guests/${id}`);
+    const response = await fetch(`${API_URL}/guests/${id}`);
     if (!response.ok) {
       throw new Error('Error occurred while fetching guest.');
     }

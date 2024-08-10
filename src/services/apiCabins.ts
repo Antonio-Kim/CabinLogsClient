@@ -1,3 +1,5 @@
+const API_URL = import.meta.env.VITE_API_URL;
+
 export type Cabins = {
   id: number;
   created_at: string;
@@ -11,7 +13,7 @@ export type Cabins = {
 
 export async function createCabin(formData: FormData): Promise<void> {
   try {
-    const response = await fetch('http://localhost:5000/cabins', {
+    const response = await fetch(`${API_URL}/cabins`, {
       method: 'POST',
       body: formData,
     });
@@ -25,7 +27,7 @@ export async function createCabin(formData: FormData): Promise<void> {
 }
 
 export async function deleteCabin(id: number): Promise<void> {
-  const response = await fetch(`http://localhost:5000/cabins/${id}`, {
+  const response = await fetch(`${API_URL}/cabins/${id}`, {
     method: 'DELETE',
   });
   if (response.status === 404) {
@@ -38,7 +40,7 @@ export async function deleteCabin(id: number): Promise<void> {
 
 export async function getCabins(): Promise<Cabins[]> {
   try {
-    const response = await fetch('http://localhost:5000/cabins', {
+    const response = await fetch(`${API_URL}/cabins`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
