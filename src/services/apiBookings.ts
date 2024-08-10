@@ -204,8 +204,7 @@ export async function getStaysTodayActivity(): Promise<GetBookingsResponse> {
   try {
     const unconfirmedURL = `${API_URL}/bookings?status=unconfirmed&start=7`;
     const checkedinURL = `${API_URL}/bookings?status=checked-in&start=7`;
-    // const today = new Date().toISOString().split('T')[0];
-    const today = '2024-08-04';
+    const today = new Date().toISOString().split('T')[0];
 
     const unconfirmedResponse = await fetch(unconfirmedURL);
     const checkedinResponse = await fetch(checkedinURL);
